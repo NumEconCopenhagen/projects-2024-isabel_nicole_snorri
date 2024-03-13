@@ -1,9 +1,9 @@
-# \[Group name\]
+# \[Isabel_Nicole_Snorri\]
 
 **Group members:**
-- A
-- B
-- C
+- Isabel Gouveia
+- Nicole Costello
+- Snorri Egholm
 
 This repository contains  
 1. Inaugural project. 
