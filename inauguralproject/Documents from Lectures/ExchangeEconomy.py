@@ -15,18 +15,26 @@ class ExchangeEconomyClass:
         par.w2A = 0.3
 
     def utility_A(self,x1A,x2A):
-        pass
+        return x1A**self.par.alpha * x2A**(1-self.par.alpha)
 
     def utility_B(self,x1B,x2B):
-        pass
+        return x1B**self.par.beta * x2B**(1-self.par.beta)
 
-    def demand_A(self,p1):
-        pass
+    def demand_A(self,p1,p2=1):
+        par = self.par
+        I = p1*par.w1A + p2*par.w2A  # Total income for A
+        x1A_star = par.alpha * I / p1
+        x2A_star = (1 - par.alpha) * I / p2
+        return x1A_star, x2A_star
 
-    def demand_B(self,p1):
-        pass
+    def demand_B(self,p1,p2=1):
+        par = self.par
+        I = p1*(1 - par.w1A) + p2*(1 - par.w2A)  # Total income for B
+        x1B_star = par.beta * I / p1
+        x2B_star = (1 - par.beta) * I / p2
+        return x1B_star, x2B_star
 
-    def check_market_clearing(self,p1):
+    def check_market_clearing(self,p1,p2=1):
 
         par = self.par
 
