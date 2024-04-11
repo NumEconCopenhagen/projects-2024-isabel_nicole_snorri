@@ -1,3 +1,5 @@
+import pandas as pd
+
 class DataCleaner:
     def __init__(self, filename, skip_rows=0):
         self.data = pd.read_excel(filename, skiprows=skip_rows) # starting by skipping necessary rows
