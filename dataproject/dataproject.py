@@ -14,9 +14,8 @@ class DataCleaner:
             self.data.drop(columns, axis=1, inplace=True) # dropping necessary columns
     
     def new_year_name(self):
-        year_renaming = {str(year): f"p{year}" for year in self['Year'].unique()}
-        self['Year'] = self['Year'].astype(str).replace(year_renaming)
-
+        year_renaming = {str(year): f"p{year}" for year in self.data['Year'].unique()}
+        self.data['Year'] = self.data['Year'].astype(str).replace(year_renaming)
 
     def get_cleaned_data(self):
         return self.data
