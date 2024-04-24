@@ -29,3 +29,18 @@ class DataCleaner:
 
     def get_cleaned_data(self):
         return self.data
+
+class DataDetrender:
+    def __init__(self, file_path):
+        self.data = pd.read_csv(file_path)
+
+    def detrend_column(self, column_name):
+        # Perform linear detrending on the specified column
+        detrended_values = detrend(self.data[column_name], type='linear')
+
+        # Generate the name for the new column
+        new_column_name = 'Detrended ' + column_name
+
+        # Add the detrended values as a new column to the DataFrame
+        self.data[new_column_name] = detrended_values
+
