@@ -30,17 +30,55 @@ class DataCleaner:
     def get_cleaned_data(self):
         return self.data
 
-class DataDetrender:
-    def __init__(self, file_path):
-        self.data = pd.read_csv(file_path)
+class TimeSeriesAnalyzer:
+    def __init__(self, data, gdp_column_name, life_exp_column_name):
+        self.data = data
+        self.gdp_column_name = gdp_column_name
+        self.life_exp_column_name = life_exp_column_name
 
-    def detrend_column(self, column_name):
-        # Perform linear detrending on the specified column
-        detrended_values = detrend(self.data[column_name], type='linear')
+    def detrend_columns(self):
+        # Perform linear detrending on specified columns
+        detrended_gdp = detrend(self.data[self.gdp_column_name], type='linear')
+        detrended_life_exp = detrend(self.data[self.life_exp_column_name], type='linear')
 
-        # Generate the name for the new column
-        new_column_name = 'Detrended ' + column_name
+        # Add the detrended values as new columns to the DataFrame
+        self.data['Detrended GDP per capita'] = detrended_gdp
+        self.data['Detrended Life expectancy'] = detrended_life_exp
 
-        # Add the detrended values as a new column to the DataFrame
-        self.data[new_column_name] = detrended_values
+    def plot_detrended_data(self):
+        # Set the figure size and create subplots
+        fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(14, 7))
 
+        # First subplot: GDP per capita
+        ax1 = axes[0]
+        ax1.plot(self.data['Year'], self.data[self.gdp_column_name], color='r', label='GDP per capita')
+        ax1.set_xlabel('Year')
+        ax1.set_ylabel('GDP per capita ($)', color='r')
+        ax1.tick_params(axis='y', labelcolor='r')
+        ax1.set_title('GDP per Capita')
+
+        # Create a secondary y-axis (right) that shares the same x-axis for detrended GDP per capita
+        ax2 = ax1.twinx()
+        ax2.plot(self.data['Year'], self.data['Detrended GDP per capita'], color='g', label='Detrended GDP per capita')
+        ax2.set_ylabel('Detrended GDP per capita', color='g')
+        ax2.tick_params(axis='y', labelcolor='g')
+
+        # Second subplot: Life expectancy
+        ax3 = axes[1]
+        ax3.plot(self.data['Year'], self.data['Detrended Life expectancy'], color='r', label='Detrended Life expectancy')
+        ax3.set_xlabel('Year')
+        ax3.set_ylabel('Detrended Life expectancy', color='r')
+        ax3.tick_params(axis='y', labelcolor='r')
+        ax3.set_title('Life Expectancy')
+
+        # Create a secondary y-axis (right) that shares the same x-axis for life expectancy
+        ax4 = ax3.twinx()
+        ax4.plot(self.data['Year'], self.data[self.life_exp_column_name], color='g', label='Life expectancy')
+        ax4.set_ylabel('Life expectancy', color='g')
+        ax4.tick_params(axis='y', labelcolor='g')
+
+        # Adjust layout
+        plt.tight_layout()
+
+        # Show the plots
+        plt.show()
