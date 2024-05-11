@@ -63,3 +63,66 @@ class CournotModel:
         plt.legend()
         plt.grid(True)
         plt.show()
+
+class NCournotModel:
+    def __init__(self, a, costs):
+        """
+        Initialize the n-firm Cournot model with the market intercept and marginal costs for each firm.
+
+        Parameters:
+        a (float): Market demand intercept.
+        costs (list of floats): Marginal costs for each firm.
+        """
+        self.a = a
+        self.costs = costs
+        self.n = len(costs)
+
+    def demand_price(self, quantities):
+        """Calculate the market price given quantities by all firms."""
+        return self.a - sum(quantities)
+
+    def profit(self, i, quantities):
+        """Calculate the profit for firm i."""
+        price = self.demand_price(quantities)
+        return (price - self.costs[i]) * quantities[i]
+
+    def best_response(self, i, quantities):
+        """Calculate firm i's best response given other firms' quantities."""
+        other_output = sum(quantities) - quantities[i]
+        return max((self.a - self.costs[i] - other_output) / (self.n + 1), 0)
+
+    def find_nash_equilibrium(self, initial_guesses):
+        """Find the Nash equilibrium using numerical methods."""
+        from scipy.optimize import fsolve
+
+        def equations(quantities):
+            return [quantities[i] - self.best_response(i, quantities) for i in range(self.n)]
+
+        equilibrium_quantities = fsolve(equations, initial_guesses)
+        return equilibrium_quantities
+    
+    def plot_equilibrium_quantities(self, quantities):
+        """Plot the equilibrium quantities for each firm along with their marginal costs."""
+        
+        fig, ax = plt.subplots()
+        indices = range(len(quantities))
+        ax.bar(indices, quantities, color='blue', label='Equilibrium Quantities')
+
+        # Adding a line plot for marginal costs
+        ax2 = ax.twinx()  # Create a second y-axis for the marginal costs
+        ax2.plot(indices, self.costs, color='red', label='Marginal Costs', marker='o')
+        ax2.set_ylabel('Marginal Costs')
+
+        # Setting labels and titles
+        ax.set_xlabel('Firms')
+        ax.set_ylabel('Quantities')
+        ax.set_title('Equilibrium Quantities and Marginal Costs for Each Firm')
+        ax.set_xticks(indices)
+        ax.set_xticklabels([f'Firm {i+1}' for i in indices])
+
+        # Adding legends for both quantities and costs
+        lines, labels = ax.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax2.legend(lines + lines2, labels + labels2, loc='upper left')
+
+        plt.show()
