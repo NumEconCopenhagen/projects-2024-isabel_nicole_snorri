@@ -56,7 +56,7 @@ class CournotModel:
         plt.plot(q_range, q1_reactions, label='Best Response of Firm 1 (q1 to q2)')
         plt.plot(q2_reactions, q_range, label='Best Response of Firm 2 (q2 to q1)')
         equilibrium = self.find_nash_equilibrium()
-        plt.plot(equilibrium[0], equilibrium[1], 'ro', label='Nash Equilibrium')
+        plt.plot(equilibrium[1], equilibrium[0], 'ro', label='Nash Equilibrium')
         plt.xlabel('Quantity by Firm 2')
         plt.ylabel('Quantity by Firm 1')
         plt.title('Cournot Model Best Response Functions and Nash Equilibrium')
