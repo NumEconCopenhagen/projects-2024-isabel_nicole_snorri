@@ -7,4 +7,6 @@ Our final portfolio is composed by 4 different folders:
 3. modelproject: Titled "The Cournot Model", which investigates the Counot model under different contexts.
 4. examproject:  Solving the three exercises from the 2024 exam of Introduction to Programming and Numerical Analysis course. 
 
+**Use of AI tools**: AI, specifically GhatGPT, was used in this exam to help interpret questions, provide guidance for code generation, and code organization and neatness.
+
 **Dependencies:** Apart from a standard Anaconda Python 3 installation, the project requires no further packages.
