@@ -8,6 +8,3 @@ We solve a set of 8 questions, using python code.  We provide an initial general
 The **results** of the project can be seen from running [inauguralproject.ipynb](inauguralproject.ipynb).
 
 **Dependencies:** Apart from a standard Anaconda Python 3 installation, the project requires no further packages. The project also refers to a py file [ExchangeEconomy.py] for coding neatness and simplification. 
-
-**Credits**
-Isabel Gouveia, Snorri Egholm, Nicole Costello
